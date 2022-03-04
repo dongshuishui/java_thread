@@ -1,0 +1,50 @@
+package com.dongshuishui.ticket;
+
+public class TicketRunnable3 implements Runnable {
+
+    private int ticket = 5;
+
+    @Override
+    public void run() {
+        for (int i = 0; i < 5; i++) {
+            /*try {
+                Thread.sleep(200);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }*/
+           /* synchronized (this) {
+                if (ticket > 0) {
+                    System.out.println(Thread.currentThread().getName() + "正在出售第" + (ticket--) + "张票");
+                }
+
+            }*/
+            sale();
+        }
+    }
+
+    public synchronized void sale() {
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        if (ticket > 0) {
+            System.out.println(Thread.currentThread().getName() + "正在出售第" + (ticket--) + "张票");
+        }
+
+    }
+
+    public static void main(String[] args) {
+        TicketRunnable3 ticketRunnable2 = new TicketRunnable3();
+        Thread thread1 = new Thread(ticketRunnable2, "A");
+        Thread thread2 = new Thread(ticketRunnable2, "B");
+        Thread thread3 = new Thread(ticketRunnable2, "C");
+        Thread thread4 = new Thread(ticketRunnable2, "D");
+
+        thread1.start();
+        thread2.start();
+        thread3.start();
+        thread4.start();
+    }
+}
